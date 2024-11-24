@@ -1,36 +1,95 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🍹 PINKYS UP DC
 
-## Getting Started
+PINKYS UP DC is a premium mobile mocktail catering service based in Washington, DC. We specialize in creating sophisticated, non-alcoholic beverages for events that deserve an elevated touch.
 
-First, run the development server:
+## 🌟 Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- **Signature Mocktails**: Browse our curated collection of non-alcoholic beverages
+- **Event Booking**: Easy-to-use quote request system
+- **Mobile-First Design**: Fully responsive interface for all devices
+- **Real-time Form Validation**: Instant feedback for quote submissions
+- **Automated Email Notifications**: Immediate confirmation of quote requests
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🛠️ Tech Stack
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- **Framework**: Next.js 14 (App Router)
+- **Styling**: Tailwind CSS with custom UI components
+- **Animations**: Framer Motion
+- **Form Handling**: Server Actions with Zod validation
+- **Email Service**: Resend
+- **Deployment**: Vercel
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🚀 Getting Started
 
-## Learn More
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/cbarrett3/pinkys-up.git
+   ```
 
-To learn more about Next.js, take a look at the following resources:
+2. Install dependencies:
+   ```bash
+   cd pinkys-up
+   npm install
+   ```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+3. Set up environment variables:
+   Create a `.env` file in the root directory with:
+   ```
+   RESEND_API_KEY=your_resend_api_key
+   ```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+4. Run the development server:
+   ```bash
+   npm run dev
+   ```
 
-## Deploy on Vercel
+5. Open [http://localhost:3000](http://localhost:3000) in your browser
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 📝 Environment Variables
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- `RESEND_API_KEY`: Required for email functionality (quote form submissions)
+
+## 🎨 Design System
+
+- **Typography**: Playfair Display for headings, Inter for body text
+- **Color Palette**: Pink-to-purple gradients, minimalist whites
+- **Design Philosophy**: Modern glassmorphism with emphasis on sophistication
+- **Animations**: Subtle motion for enhanced user experience
+
+## 📱 Key Features
+
+### Quote Form
+- Real-time validation
+- Automated email notifications
+- Comprehensive event details collection
+
+### Mocktail Showcase
+- Seasonal collections
+- Detailed ingredient lists
+- Beautiful presentation imagery
+
+### Responsive Design
+- Mobile-first approach
+- Optimized for all screen sizes
+- Touch-friendly interactions
+
+## 🔄 Continuous Integration
+
+The project is set up with continuous deployment:
+- GitHub repository: [cbarrett3/pinkys-up](https://github.com/cbarrett3/pinkys-up)
+- Vercel deployment: Automatic deploys on push to main branch
+
+## 👩‍💼 About
+
+PINKYS UP DC was founded by Brenda Pereira Vargas with a vision to revolutionize the non-alcoholic beverage scene in Washington, DC. Our mission is to provide sophisticated, inclusive drinking experiences for all types of celebrations.
+
+## 📞 Contact
+
+For business inquiries:
+- WhatsApp: [Contact Us](http://Wa.me/+15715014766)
+- Instagram: [@pinkysupdc](https://instagram.com/pinkysupdc)
+- TikTok: [@pinkysupdc](https://tiktok.com/@pinkysupdc)
+
+## 📄 License
+
+This project is proprietary software. All rights reserved.
