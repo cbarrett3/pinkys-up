@@ -3,7 +3,6 @@
 import React from 'react';
 import Image from "next/image"
 import { motion } from "framer-motion"
-import { ChevronLeft, ChevronRight } from 'lucide-react'
 import { Button } from "@/components/ui/button"
 
 export function ServiceShowcase() {

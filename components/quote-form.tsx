@@ -1,9 +1,8 @@
 'use client'
 
 import { motion } from "framer-motion"
-import { useState, useRef } from "react"
+import { useState } from "react"
 import { submitQuoteForm } from '@/app/actions'
-import { Button } from '@/components/ui/button'
 import { Checkbox } from '@/components/ui/checkbox'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -11,9 +10,8 @@ import { Textarea } from '@/components/ui/textarea'
 import { SubmitButton } from '@/components/submit-button'
 
 export function QuoteForm() {
-  const [formState, setFormState] = useState<{ status: 'idle' }>({ status: 'idle' });
+  const [formState, setFormState] = useState<{ status: 'idle' | 'pending' | 'error' }>({ status: 'idle' });
   const [submitted, setSubmitted] = useState(false);
-  const formRef = useRef<HTMLFormElement>(null);
 
   const [formData, setFormData] = useState({
     firstName: '',

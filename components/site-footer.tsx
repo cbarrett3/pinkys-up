@@ -1,7 +1,6 @@
 'use client';
 
 import Link from "next/link"
-import { motion } from "framer-motion"
 import { Instagram } from "lucide-react"
 import { MarqueeText } from "./marquee-text"
 import { MusicPlayer } from "./music-player"

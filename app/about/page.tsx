@@ -85,7 +85,7 @@ export default function AboutPage() {
             },
             {
               step: "Step Four.",
-              title: "At PINKYS UP DC, we're revolutionizing the way people think about non-alcoholic beverages.",
+              title: "Let's Create Magic! ✨",
               description: "We're proud to bring DC's most sophisticated mocktail experience to your special events.",
               hasButton: false
             }

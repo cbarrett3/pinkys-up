@@ -4,12 +4,6 @@ import React from 'react';
 import Image from "next/image"
 import { motion } from 'framer-motion';
 
-interface ServiceBar {
-  title: string;
-  description: string;
-  image: string;
-}
-
 export function ServiceBars() {
   return (
     <section className="py-20" id="bars">
