@@ -20,10 +20,10 @@ export function SiteHeader() {
       transition={{ type: "spring", stiffness: 300, damping: 30 }}
     >
       <div className="container flex h-20 items-center justify-between">
-        <Link href="/">
+        <Link href="/" className="flex-shrink-0 mr-4">
           <AnimatedLogo />
         </Link>
-        <nav className="space-x-6 text-sm uppercase tracking-wide">
+        <nav className="flex-grow flex justify-end space-x-4 md:space-x-6 text-sm uppercase tracking-wide">
           {navItems.map((item) => (
             <Link
               key={item.name}

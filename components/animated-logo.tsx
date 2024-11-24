@@ -9,21 +9,22 @@ export function AnimatedLogo() {
     <>
       {/* Mobile Logo */}
       <motion.div
-        className="md:hidden"
+        className="md:hidden p-2"
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
       >
         <motion.div
-          whileHover={{ rotate: 360 }}
-          transition={{ duration: 1, type: "spring", stiffness: 60 }}
+          whileHover={{ scale: 1.1, rotate: 360 }}
+          whileTap={{ scale: 0.9 }}
+          transition={{ duration: 0.8, type: "spring", stiffness: 60 }}
         >
           <Image
             src="/disco-mocktail.svg"
             alt="PINKYS UP"
-            width={40}
-            height={40}
-            className="w-10 h-10"
+            width={48}
+            height={48}
+            className="w-12 h-12"
           />
         </motion.div>
       </motion.div>
