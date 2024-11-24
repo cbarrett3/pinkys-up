@@ -7,7 +7,7 @@ import { AnimatedLogo } from './animated-logo';
 const navItems = [
   { name: "Mocktails", showOnMobile: true },
   { name: "About", showOnMobile: true },
-  { name: "Gallery", showOnMobile: true },
+  { name: "Gallery", showOnMobile: false },
   { name: "Quote", showOnMobile: true }
 ];
 
