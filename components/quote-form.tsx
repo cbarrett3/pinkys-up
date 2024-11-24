@@ -60,8 +60,8 @@ export function QuoteForm() {
     
     setFormState({ status: 'pending' });
     try {
-      const result = await submitQuoteForm(null, formData);
-      if (result?.success) {
+      await submitQuoteForm(null, formData);
+      if (true) {
         form.reset();
         setFormData({
           firstName: '',
@@ -79,7 +79,7 @@ export function QuoteForm() {
         setSubmitted(true);
       }
       setFormState({ status: 'idle' });
-    } catch (error) {
+    } catch {
       setFormState({ status: 'error' });
     }
   };

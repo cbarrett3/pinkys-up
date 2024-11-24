@@ -34,7 +34,7 @@ export default function AboutPage() {
                 transition={{ delay: 0.3, duration: 0.6 }}
                 className="text-xl mb-4 text-gray-800"
               >
-                Welcome to DC's chicest mobile mocktail experience! Our stunning bar cart brings sophistication and style to alcohol-free celebrations, one perfectly crafted drink at a time.
+                Welcome to DC&apos;s chicest mobile mocktail experience! Our stunning bar cart brings sophistication and style to alcohol-free celebrations, one perfectly crafted drink at a time.
               </motion.p>
               <motion.p 
                 initial={{ opacity: 0, y: 20 }}
@@ -42,7 +42,7 @@ export default function AboutPage() {
                 transition={{ delay: 0.4, duration: 0.6 }}
                 className="text-gray-600"
               >
-                Ready to make your event sparkle? Let's get this party started! ✨
+                Ready to make your event sparkle? Let&apos;s get this party started! ✨
               </motion.p>
             </div>
           </div>
