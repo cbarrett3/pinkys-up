@@ -8,7 +8,7 @@ export function ServiceBars() {
   return (
     <section className="py-20" id="bars">
       <div className="container mx-auto px-4">
-        <h2 className="text-4xl font-bold text-center mb-12">Our Mobile Mocktail Experience</h2>
+        <h2 className="text-4xl font-playfair font-bold text-center mb-8 bg-gradient-to-r from-pink-500 to-purple-600 bg-clip-text text-transparent leading-relaxed">Our Mobile Mocktail Experience</h2>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}

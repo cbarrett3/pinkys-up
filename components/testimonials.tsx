@@ -36,7 +36,7 @@ export function Testimonials() {
           className="text-center mb-16"
         >
           <h2 className="text-4xl font-playfair font-bold bg-gradient-to-r from-pink-500 to-purple-600 bg-clip-text text-transparent mb-4">
-            What Our Clients Say
+            What People Are Saying
           </h2>
           <p className="text-gray-600 max-w-2xl mx-auto">
             Creating memorable experiences through exceptional service and innovative mocktails

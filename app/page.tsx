@@ -25,6 +25,14 @@ export default function Home() {
       </div>
       <div className="bg-primary/10">
         <div className="container py-24">
+        <div className="text-center mb-12">
+            <h1 className="text-5xl font-bold mb-4 bg-gradient-to-r from-pink-500 to-purple-500 bg-clip-text text-transparent">
+              Ready to Elevate Your Event?
+            </h1>
+            <p className="text-xl text-gray-800 font-medium">
+              Let&apos;s create an unforgettable experience together.
+            </p>
+          </div>
           <div className="max-w-xl mx-auto">
             <QuoteForm />
           </div>
