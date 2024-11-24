@@ -2,7 +2,6 @@
 
 import React from 'react';
 import Image from "next/image"
-import { Button } from "@/components/ui/button"
 import { motion } from 'framer-motion';
 
 interface ServiceBar {
@@ -12,15 +11,6 @@ interface ServiceBar {
 }
 
 export default function ServiceBars() {
-  const services: ServiceBar[] = [
-    {
-      title: "The Mobile Mocktail Cart",
-      description:
-        "Our signature vintage-inspired mobile bar cart brings elegance and charm to any event. Perfect for intimate gatherings and sophisticated soirées, our cart delivers a unique blend of style and refreshment. Each event is carefully curated to create an unforgettable experience, combining artisanal mocktails with impeccable service.",
-      image: "/cart.jpg",
-    },
-  ];
-
   return (
     <section className="py-20" id="bars">
       <div className="container mx-auto px-4">

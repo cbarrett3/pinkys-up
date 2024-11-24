@@ -72,7 +72,63 @@ export async function submitQuoteForm(prevState: FormState, formData: FormData):
 
       console.log('Email send result:', JSON.stringify(emailResult, null, 2))
       return { error: null, success: true }
-    } catch (error: any) {
+    } catch (error) {
+      console.error('Detailed email error:', {
+        name: error?.name,
+        message: error?.message,
+        stack: error?.stack,
+        data: error?.data,
+        fullError: JSON.stringify(error, null, 2)
+      })
+      return { error: error?.message || "Failed to send email. Please try again later.", success: false }
+    }
+  } catch (error) {
+    console.error('Error sending email:', error)
+    return { error: "Failed to submit form. Please try again later.", success: false }
+  }
+}
+
+export async function sendEmail(data: FormData): Promise<{ error?: string; success?: boolean }> {
+  try {
+    const validatedFields = formSchema.safeParse({
+      firstName: data.get('firstName'),
+      lastName: data.get('lastName'),
+      phone: data.get('phone'),
+      email: data.get('email'),
+      services: data.getAll('services'),
+      eventType: data.get('eventType'),
+      eventDate: data.get('eventDate'),
+      location: data.get('location'),
+      guestCount: data.get('guestCount'),
+      referralSource: data.get('referralSource'),
+      additionalDetails: data.get('additionalDetails'),
+    })
+
+    if (!validatedFields.success) {
+      return { error: "Please fill out all required fields", success: false }
+    }
+
+    const validatedData = validatedFields.data
+
+    // Send email using Resend
+    try {
+      console.log('Attempting to send email with data:', {
+        to: 'pereira.brenda61@gmail.com',
+        subject: `New Quote Request from ${validatedData.firstName} ${validatedData.lastName}`,
+        // Don't log the actual HTML content
+      })
+
+      const emailResult = await resend.emails.send({
+        from: 'Pinkys Up <onboarding@resend.dev>',
+        to: ['pereira.brenda61@gmail.com'],
+        subject: `New Quote Request from ${validatedData.firstName} ${validatedData.lastName}`,
+        html: QuoteRequestEmail(validatedData),
+        replyTo: validatedData.email,
+      })
+
+      console.log('Email send result:', JSON.stringify(emailResult, null, 2))
+      return { error: null, success: true }
+    } catch (error) {
       console.error('Detailed email error:', {
         name: error?.name,
         message: error?.message,

@@ -83,6 +83,12 @@ export default function AboutPage() {
               step: "Step Three.",
               title: "Time to Shine! 🌟",
               description: "Our gorgeous mobile bar will roll up ready to serve joy in every glass. You focus on having fun - we'll handle everything else with style and sparkle!",
+            },
+            {
+              step: "Step Four.",
+              title: "At PINKYS UP DC, we're revolutionizing the way people think about non-alcoholic beverages.",
+              description: "We're proud to bring DC's most sophisticated mocktail experience to your special events.",
+              hasButton: false
             }
           ].map((section, index) => (
             <motion.section
@@ -98,7 +104,7 @@ export default function AboutPage() {
                   {section.step}
                 </h2>
                 <h3 className="text-2xl mb-4 text-gray-800">{section.title}</h3>
-                <p className="text-gray-600 mb-8">
+                <p className="text-lg text-gray-600 mb-6">
                   {section.description}
                 </p>
                 {section.hasButton && (

@@ -50,16 +50,13 @@ export function FounderSection() {
                     transition={{ duration: 0.6, delay: 0.2 }}
                   >
                     <h2 className="text-3xl font-bold mb-4">Elevating Moments by Brenda✨</h2>
-                    <p className="text-lg text-gray-700 leading-relaxed mb-6">
-                      Hi, I'm Brenda Pereira Vargas, founder of PINKYS UP DC. My passion for crafting 
-                      exceptional non-alcoholic beverages stems from a deep appreciation for inclusive 
-                      celebration. Every mocktail we create is an expression of creativity and care, 
-                      designed to make everyone feel special and celebrated.
+                    <p className="text-lg text-gray-600 mb-6">
+                      Hey there! I&apos;m Brenda, the founder of PINKYS UP DC. My journey into the world of mocktails began with a simple
+                      realization - everyone deserves to feel included and celebrated, regardless of their relationship with alcohol.
                     </p>
-                    <p className="text-lg text-gray-700 leading-relaxed">
-                      With PINKYS UP, I'm bringing a fresh perspective to DC's beverage scene, 
-                      proving that sophisticated, delicious drinks don't need alcohol to create 
-                      unforgettable moments.
+                    <p className="text-lg text-gray-600">
+                      Today, I&apos;m proud to bring DC&apos;s most sophisticated non-alcoholic beverage experience to your events. 
+                      Let&apos;s create unforgettable moments together! 🌟
                     </p>
                   </motion.div>
                 </div>

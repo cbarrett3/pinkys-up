@@ -95,7 +95,7 @@ export function QuoteForm() {
       transition={{ duration: 0.8 }}
       className="relative"
     >            
-      <form onSubmit={handleSubmit} className="space-y-6 bg-white p-8 rounded-lg shadow-lg border border-gray-100">
+      <form onSubmit={handleSubmit} className="space-y-8 bg-white p-8 rounded-lg shadow-lg border border-gray-100">
         {formState?.error && (
           <motion.div
             initial={{ opacity: 0, y: -10 }}
@@ -138,7 +138,7 @@ export function QuoteForm() {
                 Thank You for Choosing PINKYS UP!
               </h3>
               <p className="text-gray-600 text-lg">
-                We're excited to be part of your special event. We'll review your request and get back to you within 24-48 hours with a personalized quote.
+                We&apos;ll get back to you within 24-48 hours with pricing and availability.
               </p>
             </motion.div>
             <motion.div

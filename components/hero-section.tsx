@@ -48,11 +48,11 @@ export default function HeroSection() {
           >
             <span className="block mb-4">
               PINKYS UP DC is a fresh mocktail experience crafted by Brenda Pereira Vargas 
-              to revitalize the District's social scene.
+              to revitalize the District&apos;s social scene.
             </span>
             <span className="block">
               Each creation is infused with creativity and passion, bringing a healthy, 
-              vibrant buzz to the city. Mobile and ready to serve, we're here to make your 
+              vibrant buzz to the city. Mobile and ready to serve, we&apos;re here to make your 
               next gathering unforgettable. ✨
             </span>
           </motion.p>
