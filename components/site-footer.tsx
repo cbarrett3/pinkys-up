@@ -15,7 +15,7 @@ export function SiteFooter() {
         <div className="flex items-center space-x-6 ml-auto">
           <MusicPlayer />
           <Link 
-            href="https://instagram.com/pinkysup-dc" 
+            href="https://instagram.com/pinkysup_dc" 
             target="_blank"
             className="hover:text-pink-500 transition-colors"
           >
@@ -23,7 +23,7 @@ export function SiteFooter() {
             <span className="sr-only">Instagram</span>
           </Link>
           <Link 
-            href="https://tiktok.com/@pinkysup-dc" 
+            href="https://tiktok.com/@pinkysup_dc" 
             target="_blank"
             className="hover:text-pink-500 transition-colors"
           >
