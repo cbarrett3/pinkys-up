@@ -10,7 +10,7 @@ interface ServiceBar {
   image: string;
 }
 
-export default function ServiceBars() {
+export function ServiceBars() {
   return (
     <section className="py-20" id="bars">
       <div className="container mx-auto px-4">

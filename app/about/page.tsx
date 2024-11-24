@@ -5,7 +5,6 @@ import Link from "next/link"
 import { SiteHeader } from "@/components/site-header"
 import { Button } from "@/components/ui/button"
 import { motion } from "framer-motion"
-import { cn } from "@/lib/utils"
 
 export default function AboutPage() {
   return (

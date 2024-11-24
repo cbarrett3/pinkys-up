@@ -4,7 +4,7 @@ import Image from "next/image"
 import { motion, useScroll, useTransform } from "framer-motion"
 import React from 'react';
 
-export default function HeroSection() {
+export function HeroSection() {
   const { scrollY } = useScroll()
   const y = useTransform(scrollY, [0, 500], [0, 200])
 

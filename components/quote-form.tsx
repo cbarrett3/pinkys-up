@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from "framer-motion"
-import { useState, useTransition } from "react"
+import { useState, useRef } from "react"
 import { submitQuoteForm } from '@/app/actions'
 import { Button } from '@/components/ui/button'
 import { Checkbox } from '@/components/ui/checkbox'
@@ -11,11 +11,9 @@ import { Textarea } from '@/components/ui/textarea'
 import { SubmitButton } from '@/components/submit-button'
 
 export function QuoteForm() {
-  const [isPending, startTransition] = useTransition()
-  const [formState, setFormState] = useState<{ error?: string | null; success?: boolean }>({
-    error: null,
-    success: false
-  })
+  const [formState, setFormState] = useState<{ status: 'idle' }>({ status: 'idle' });
+  const [submitted, setSubmitted] = useState(false);
+  const formRef = useRef<HTMLFormElement>(null);
 
   const [formData, setFormData] = useState({
     firstName: '',
@@ -62,30 +60,30 @@ export function QuoteForm() {
     
     const formData = new FormData(form);
     
-    startTransition(async () => {
-      try {
-        const result = await submitQuoteForm(null, formData);
-        if (result?.success) {
-          form.reset();
-          setFormData({
-            firstName: '',
-            lastName: '',
-            email: '',
-            phone: '',
-            eventDate: '',
-            eventType: '',
-            guestCount: '',
-            location: '',
-            referralSource: '',
-            additionalDetails: ''
-          });
-          setErrors({});
-        }
-        setFormState(result || { error: null, success: false });
-      } catch (error) {
-        setFormState({ error: "An unexpected error occurred", success: false });
+    setFormState({ status: 'pending' });
+    try {
+      const result = await submitQuoteForm(null, formData);
+      if (result?.success) {
+        form.reset();
+        setFormData({
+          firstName: '',
+          lastName: '',
+          email: '',
+          phone: '',
+          eventDate: '',
+          eventType: '',
+          guestCount: '',
+          location: '',
+          referralSource: '',
+          additionalDetails: ''
+        });
+        setErrors({});
+        setSubmitted(true);
       }
-    });
+      setFormState({ status: 'idle' });
+    } catch (error) {
+      setFormState({ status: 'error' });
+    }
   };
 
   return (
@@ -96,16 +94,16 @@ export function QuoteForm() {
       className="relative"
     >            
       <form onSubmit={handleSubmit} className="space-y-8 bg-white p-8 rounded-lg shadow-lg border border-gray-100">
-        {formState?.error && (
+        {formState.status === 'error' && (
           <motion.div
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             className="p-3 bg-red-50 border border-red-500 rounded text-red-500"
           >
-            {formState.error}
+            An unexpected error occurred
           </motion.div>
         )}
-        {formState?.success === true ? (
+        {submitted ? (
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
