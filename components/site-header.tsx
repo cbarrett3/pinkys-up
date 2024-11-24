@@ -28,7 +28,9 @@ export function SiteHeader() {
             <Link
               key={item.name}
               href={`/${item.name.toLowerCase().replace(" ", "-")}`}
-              className="animated-underline hover:text-primary-foreground transition-colors"
+              className={`animated-underline hover:text-primary-foreground transition-colors ${
+                !item.showOnMobile ? 'hidden md:inline-block' : ''
+              }`}
             >
               {item.name}
             </Link>
