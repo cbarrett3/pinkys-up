@@ -4,7 +4,6 @@ import { z } from "zod"
 import { Resend } from 'resend'
 import { QuoteRequestEmail } from '@/emails/quote-request'
 
-// Debug: Log if API key is present (but not the actual key)
 const apiKey = process.env.RESEND_API_KEY
 console.log('Debug - Environment check:')
 console.log('- Resend API Key present:', !!apiKey)
@@ -38,7 +37,7 @@ type EmailError = {
   name?: string
   message?: string
   stack?: string
-  data?: any
+  data?: Record<string, unknown>
 }
 
 export async function submitQuoteForm(prevState: FormState, formData: FormData): Promise<FormState> {
@@ -52,7 +51,7 @@ export async function submitQuoteForm(prevState: FormState, formData: FormData):
     const data = validatedFields.data
 
     try {
-      const emailResult = await resend.emails.send({
+      await resend.emails.send({
         from: 'Pinkys Up <onboarding@resend.dev>',
         to: ['pereira.brenda61@gmail.com'],
         subject: `New Quote Request from ${data.firstName} ${data.lastName}`,
@@ -61,15 +60,16 @@ export async function submitQuoteForm(prevState: FormState, formData: FormData):
       })
 
       return { success: true }
-    } catch (error: any) {
-      const emailError: EmailError = {
-        name: error?.name,
-        message: error?.message,
-        stack: error?.stack,
-        data: error?.data,
+    } catch (error) {
+      const emailError: EmailError = error instanceof Error ? {
+        name: error.name,
+        message: error.message,
+        stack: error.stack,
+      } : {
+        message: 'Unknown error occurred'
       }
       console.error('Detailed email error:', emailError)
-      return { error: error?.message || "Failed to send email", success: false }
+      return { error: emailError.message || "Failed to send email", success: false }
     }
   } catch (error) {
     console.error('Error processing form:', error)
@@ -88,7 +88,7 @@ export async function sendEmail(data: FormData): Promise<{ error?: string; succe
     const validatedData = validatedFields.data
 
     try {
-      const emailResult = await resend.emails.send({
+      await resend.emails.send({
         from: 'Pinkys Up <onboarding@resend.dev>',
         to: ['pereira.brenda61@gmail.com'],
         subject: `New Quote Request from ${validatedData.firstName} ${validatedData.lastName}`,
@@ -106,15 +106,16 @@ export async function sendEmail(data: FormData): Promise<{ error?: string; succe
         `,
       });
       return { success: true }
-    } catch (error: any) {
-      const emailError: EmailError = {
-        name: error?.name,
-        message: error?.message,
-        stack: error?.stack,
-        data: error?.data,
+    } catch (error) {
+      const emailError: EmailError = error instanceof Error ? {
+        name: error.name,
+        message: error.message,
+        stack: error.stack,
+      } : {
+        message: 'Unknown error occurred'
       }
       console.error('Detailed email error:', emailError)
-      return { error: error?.message || "Failed to send email", success: false }
+      return { error: emailError.message || "Failed to send email", success: false }
     }
   } catch (error) {
     console.error('Error processing form:', error)
