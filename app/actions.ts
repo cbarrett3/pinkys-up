@@ -27,41 +27,31 @@ const formSchema = z.object({
   additionalDetails: z.string().optional(),
 })
 
+type FormData = z.infer<typeof formSchema>
+
 type FormState = {
   error?: string | null
   success?: boolean
-} | null
+}
+
+type EmailError = {
+  name?: string
+  message?: string
+  stack?: string
+  data?: any
+}
 
 export async function submitQuoteForm(prevState: FormState, formData: FormData): Promise<FormState> {
   try {
-    const validatedFields = formSchema.safeParse({
-      firstName: formData.get('firstName'),
-      lastName: formData.get('lastName'),
-      phone: formData.get('phone'),
-      email: formData.get('email'),
-      services: formData.getAll('services'),
-      eventType: formData.get('eventType'),
-      eventDate: formData.get('eventDate'),
-      location: formData.get('location'),
-      guestCount: formData.get('guestCount'),
-      referralSource: formData.get('referralSource'),
-      additionalDetails: formData.get('additionalDetails'),
-    })
+    const validatedFields = formSchema.safeParse(formData)
 
     if (!validatedFields.success) {
-      return { error: "Please fill out all required fields", success: false }
+      return { error: "Invalid form data", success: false }
     }
 
     const data = validatedFields.data
 
-    // Send email using Resend
     try {
-      console.log('Attempting to send email with data:', {
-        to: 'pereira.brenda61@gmail.com',
-        subject: `New Quote Request from ${data.firstName} ${data.lastName}`,
-        // Don't log the actual HTML content
-      })
-
       const emailResult = await resend.emails.send({
         from: 'Pinkys Up <onboarding@resend.dev>',
         to: ['pereira.brenda61@gmail.com'],
@@ -70,39 +60,26 @@ export async function submitQuoteForm(prevState: FormState, formData: FormData):
         replyTo: data.email,
       })
 
-      console.log('Email send result:', JSON.stringify(emailResult, null, 2))
-      return { error: null, success: true }
-    } catch (error) {
-      console.error('Detailed email error:', {
+      return { success: true }
+    } catch (error: any) {
+      const emailError: EmailError = {
         name: error?.name,
         message: error?.message,
         stack: error?.stack,
         data: error?.data,
-        fullError: JSON.stringify(error, null, 2)
-      })
-      return { error: error?.message || "Failed to send email. Please try again later.", success: false }
+      }
+      console.error('Detailed email error:', emailError)
+      return { error: error?.message || "Failed to send email", success: false }
     }
   } catch (error) {
-    console.error('Error sending email:', error)
-    return { error: "Failed to submit form. Please try again later.", success: false }
+    console.error('Error processing form:', error)
+    return { error: "Failed to process form", success: false }
   }
 }
 
 export async function sendEmail(data: FormData): Promise<{ error?: string; success?: boolean }> {
   try {
-    const validatedFields = formSchema.safeParse({
-      firstName: data.get('firstName'),
-      lastName: data.get('lastName'),
-      phone: data.get('phone'),
-      email: data.get('email'),
-      services: data.getAll('services'),
-      eventType: data.get('eventType'),
-      eventDate: data.get('eventDate'),
-      location: data.get('location'),
-      guestCount: data.get('guestCount'),
-      referralSource: data.get('referralSource'),
-      additionalDetails: data.get('additionalDetails'),
-    })
+    const validatedFields = formSchema.safeParse(data)
 
     if (!validatedFields.success) {
       return { error: "Please fill out all required fields", success: false }
@@ -110,36 +87,37 @@ export async function sendEmail(data: FormData): Promise<{ error?: string; succe
 
     const validatedData = validatedFields.data
 
-    // Send email using Resend
     try {
-      console.log('Attempting to send email with data:', {
-        to: 'pereira.brenda61@gmail.com',
-        subject: `New Quote Request from ${validatedData.firstName} ${validatedData.lastName}`,
-        // Don't log the actual HTML content
-      })
-
       const emailResult = await resend.emails.send({
         from: 'Pinkys Up <onboarding@resend.dev>',
         to: ['pereira.brenda61@gmail.com'],
         subject: `New Quote Request from ${validatedData.firstName} ${validatedData.lastName}`,
-        html: QuoteRequestEmail(validatedData),
-        replyTo: validatedData.email,
-      })
-
-      console.log('Email send result:', JSON.stringify(emailResult, null, 2))
-      return { error: null, success: true }
-    } catch (error) {
-      console.error('Detailed email error:', {
+        text: `
+          Name: ${validatedData.firstName} ${validatedData.lastName}
+          Email: ${validatedData.email}
+          Phone: ${validatedData.phone}
+          Services: ${validatedData.services.join(', ')}
+          Event Type: ${validatedData.eventType}
+          Event Date: ${validatedData.eventDate}
+          Location: ${validatedData.location}
+          Guest Count: ${validatedData.guestCount}
+          Referral Source: ${validatedData.referralSource}
+          Additional Details: ${validatedData.additionalDetails || 'None provided'}
+        `,
+      });
+      return { success: true }
+    } catch (error: any) {
+      const emailError: EmailError = {
         name: error?.name,
         message: error?.message,
         stack: error?.stack,
         data: error?.data,
-        fullError: JSON.stringify(error, null, 2)
-      })
-      return { error: error?.message || "Failed to send email. Please try again later.", success: false }
+      }
+      console.error('Detailed email error:', emailError)
+      return { error: error?.message || "Failed to send email", success: false }
     }
   } catch (error) {
-    console.error('Error sending email:', error)
-    return { error: "Failed to submit form. Please try again later.", success: false }
+    console.error('Error processing form:', error)
+    return { error: "Failed to process form", success: false }
   }
 }

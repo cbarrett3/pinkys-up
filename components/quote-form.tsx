@@ -23,7 +23,8 @@ export function QuoteForm() {
     guestCount: '',
     location: '',
     referralSource: '',
-    additionalDetails: ''
+    additionalDetails: '',
+    services: [] as string[]
   });
 
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -50,37 +51,41 @@ export function QuoteForm() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const form = e.currentTarget;
-
+    
     if (!validateForm()) {
       return;
     }
     
-    const formData = new FormData(form);
-    
     setFormState({ status: 'pending' });
     try {
-      await submitQuoteForm(null, formData);
-      if (true) {
-        form.reset();
+      const result = await submitQuoteForm({ error: null, success: false }, {
+        ...formData,
+        services: formData.services.length > 0 ? formData.services : ['bar']
+      });
+      
+      if (result.success) {
         setFormData({
           firstName: '',
           lastName: '',
           email: '',
           phone: '',
-          eventDate: '',
+          services: [],
           eventType: '',
-          guestCount: '',
+          eventDate: '',
           location: '',
+          guestCount: '',
           referralSource: '',
           additionalDetails: ''
         });
         setErrors({});
         setSubmitted(true);
+      } else if (result.error) {
+        setErrors({ submit: result.error });
       }
       setFormState({ status: 'idle' });
     } catch {
       setFormState({ status: 'error' });
+      setErrors({ submit: 'Failed to submit form. Please try again.' });
     }
   };
 
@@ -155,7 +160,7 @@ export function QuoteForm() {
               id="firstName"
               name="firstName"
               value={formData.firstName}
-              onChange={(e) => setFormData({ ...formData, firstName: e.target.value })}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFormData({ ...formData, firstName: e.target.value })}
               required
             />
             {errors.firstName && <p className="text-red-500 text-sm mt-1">{errors.firstName}</p>}
@@ -167,7 +172,7 @@ export function QuoteForm() {
               id="lastName"
               name="lastName"
               value={formData.lastName}
-              onChange={(e) => setFormData({ ...formData, lastName: e.target.value })}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFormData({ ...formData, lastName: e.target.value })}
               required
             />
             {errors.lastName && <p className="text-red-500 text-sm mt-1">{errors.lastName}</p>}
@@ -182,7 +187,7 @@ export function QuoteForm() {
               name="email"
               type="email"
               value={formData.email}
-              onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFormData({ ...formData, email: e.target.value })}
               required
             />
             {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email}</p>}
@@ -195,7 +200,7 @@ export function QuoteForm() {
               name="phone"
               type="tel"
               value={formData.phone}
-              onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFormData({ ...formData, phone: e.target.value })}
               required
             />
             {errors.phone && <p className="text-red-500 text-sm mt-1">{errors.phone}</p>}
@@ -206,23 +211,68 @@ export function QuoteForm() {
           <Label className="text-gray-700 font-medium">Services Needed</Label>
           <div className="grid grid-cols-2 gap-4">
             <div className="flex items-center space-x-2">
-              <Checkbox id="bar" name="services" value="bar" className="border-2 border-gray-300 data-[state=checked]:bg-pink-500 data-[state=checked]:border-pink-500" />
+              <Checkbox id="bar" name="services" value="bar" className="border-2 border-gray-300 data-[state=checked]:bg-pink-500 data-[state=checked]:border-pink-500" 
+                checked={formData.services.includes('bar')} 
+                onCheckedChange={(checked) => {
+                  if (checked) {
+                    setFormData({ ...formData, services: [...formData.services, 'bar'] });
+                  } else {
+                    setFormData({ ...formData, services: formData.services.filter((service) => service !== 'bar') });
+                  }
+                }}
+              />
               <Label htmlFor="bar" className="text-gray-600">Bar Service</Label>
             </div>
             <div className="flex items-center space-x-2">
-              <Checkbox id="mixologist" name="services" value="mixologist" className="border-2 border-gray-300 data-[state=checked]:bg-pink-500 data-[state=checked]:border-pink-500" />
+              <Checkbox id="mixologist" name="services" value="mixologist" className="border-2 border-gray-300 data-[state=checked]:bg-pink-500 data-[state=checked]:border-pink-500" 
+                checked={formData.services.includes('mixologist')} 
+                onCheckedChange={(checked) => {
+                  if (checked) {
+                    setFormData({ ...formData, services: [...formData.services, 'mixologist'] });
+                  } else {
+                    setFormData({ ...formData, services: formData.services.filter((service) => service !== 'mixologist') });
+                  }
+                }}
+              />
               <Label htmlFor="mixologist" className="text-gray-600">Mixologist</Label>
             </div>
             <div className="flex items-center space-x-2">
-              <Checkbox id="glassware" name="services" value="glassware" className="border-2 border-gray-300 data-[state=checked]:bg-pink-500 data-[state=checked]:border-pink-500" />
+              <Checkbox id="glassware" name="services" value="glassware" className="border-2 border-gray-300 data-[state=checked]:bg-pink-500 data-[state=checked]:border-pink-500" 
+                checked={formData.services.includes('glassware')} 
+                onCheckedChange={(checked) => {
+                  if (checked) {
+                    setFormData({ ...formData, services: [...formData.services, 'glassware'] });
+                  } else {
+                    setFormData({ ...formData, services: formData.services.filter((service) => service !== 'glassware') });
+                  }
+                }}
+              />
               <Label htmlFor="glassware" className="text-gray-600">Glassware</Label>
             </div>
             <div className="flex items-center space-x-2">
-              <Checkbox id="custom" name="services" value="custom" className="border-2 border-gray-300 data-[state=checked]:bg-pink-500 data-[state=checked]:border-pink-500" />
+              <Checkbox id="custom" name="services" value="custom" className="border-2 border-gray-300 data-[state=checked]:bg-pink-500 data-[state=checked]:border-pink-500" 
+                checked={formData.services.includes('custom')} 
+                onCheckedChange={(checked) => {
+                  if (checked) {
+                    setFormData({ ...formData, services: [...formData.services, 'custom'] });
+                  } else {
+                    setFormData({ ...formData, services: formData.services.filter((service) => service !== 'custom') });
+                  }
+                }}
+              />
               <Label htmlFor="custom" className="text-gray-600">Custom Menu</Label>
             </div>
             <div className="flex items-center space-x-2">
-              <Checkbox id="dj" name="services" value="dj" className="border-2 border-gray-300 data-[state=checked]:bg-pink-500 data-[state=checked]:border-pink-500" />
+              <Checkbox id="dj" name="services" value="dj" className="border-2 border-gray-300 data-[state=checked]:bg-pink-500 data-[state=checked]:border-pink-500" 
+                checked={formData.services.includes('dj')} 
+                onCheckedChange={(checked) => {
+                  if (checked) {
+                    setFormData({ ...formData, services: [...formData.services, 'dj'] });
+                  } else {
+                    setFormData({ ...formData, services: formData.services.filter((service) => service !== 'dj') });
+                  }
+                }}
+              />
               <Label htmlFor="dj" className="text-gray-600">DJ Service</Label>
             </div>
           </div>
@@ -235,7 +285,7 @@ export function QuoteForm() {
               id="eventType"
               name="eventType"
               value={formData.eventType}
-              onChange={(e) => setFormData({ ...formData, eventType: e.target.value })}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFormData({ ...formData, eventType: e.target.value })}
               required
             />
             {errors.eventType && <p className="text-red-500 text-sm mt-1">{errors.eventType}</p>}
@@ -248,7 +298,7 @@ export function QuoteForm() {
               name="eventDate"
               type="date"
               value={formData.eventDate}
-              onChange={(e) => setFormData({ ...formData, eventDate: e.target.value })}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFormData({ ...formData, eventDate: e.target.value })}
               required
             />
             {errors.eventDate && <p className="text-red-500 text-sm mt-1">{errors.eventDate}</p>}
@@ -263,7 +313,7 @@ export function QuoteForm() {
               name="guestCount"
               type="number"
               value={formData.guestCount}
-              onChange={(e) => setFormData({ ...formData, guestCount: e.target.value })}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFormData({ ...formData, guestCount: e.target.value })}
               required
             />
             {errors.guestCount && <p className="text-red-500 text-sm mt-1">{errors.guestCount}</p>}
@@ -275,7 +325,7 @@ export function QuoteForm() {
               id="location"
               name="location"
               value={formData.location}
-              onChange={(e) => setFormData({ ...formData, location: e.target.value })}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFormData({ ...formData, location: e.target.value })}
               required
             />
             {errors.location && <p className="text-red-500 text-sm mt-1">{errors.location}</p>}
@@ -288,7 +338,7 @@ export function QuoteForm() {
             id="referralSource"
             name="referralSource"
             value={formData.referralSource}
-            onChange={(e) => setFormData({ ...formData, referralSource: e.target.value })}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFormData({ ...formData, referralSource: e.target.value })}
           />
         </div>
 
@@ -298,7 +348,7 @@ export function QuoteForm() {
             id="additionalDetails"
             name="additionalDetails"
             value={formData.additionalDetails}
-            onChange={(e) => setFormData({ ...formData, additionalDetails: e.target.value })}
+            onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setFormData({ ...formData, additionalDetails: e.target.value })}
           />
         </div>
 
