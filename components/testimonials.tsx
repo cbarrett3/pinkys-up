@@ -20,7 +20,7 @@ const testimonials = [
     content: "The attention to detail in both presentation and taste was exceptional. PINKYS UP brought such elegance to our event, making everyone feel included in the celebration. A refreshing addition to DC's scene.",
     author: "Cody",
     role: "Civil Engineer",
-    image: "/cody.jpg"
+    image: "/cody.jpeg"
   }
 ]
 
